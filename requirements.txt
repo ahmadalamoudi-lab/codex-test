@@ -1,0 +1,5 @@
+streamlit>=1.30
+pandas>=2.0
+xlsxwriter>=3.0
+openpyxl>=3.1
+pytest>=8.0

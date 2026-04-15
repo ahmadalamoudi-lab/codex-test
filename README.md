@@ -2,6 +2,13 @@
 
 Internal payroll reconciliation web app that compares monthly **Time Card attendance** exports with **Oracle excuses/leave** exports, then produces payroll-ready outputs.
 
+## Run locally
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+
 ## Objectives
 
 The app automates monthly payroll attendance checks by detecting:
@@ -25,7 +32,7 @@ The app automates monthly payroll attendance checks by detecting:
 ## Workflow
 
 1. Upload monthly Time Card export
-2. Upload monthly Oracle excuses/leave export
+2. Upload monthly Oracle excuses/leave export (optional)
 3. Match attendance by `employee_id + attendance_date`
 4. Apply approved Oracle reasons (leave/excuse/mission, lateness override when configured)
 5. Generate monthly and daily payroll outputs plus Excel export
@@ -83,38 +90,6 @@ Use exact match when available; otherwise use nearest lower bracket.
 | 16 | 1.482 |
 | 24 | 2.22 |
 
-Examples:
-
-- `6h` → bracket `4h` → `0.37`
-- `10h` → bracket `8h` → `0.74`
-
-## Input Schemas
-
-### Time Card logical fields
-
-- `employee_id`
-- `employee_name`
-- `attendance_date`
-- `department`
-- `scheduled_start`
-- `scheduled_end`
-- `clock_in`
-- `clock_out`
-- `worked_hours`
-- `late_duration`
-- `early_leave_duration`
-
-### Oracle logical fields
-
-- `employee_id`
-- `employee_name`
-- `oracle_reason`
-- `approval_status`
-- `start_datetime`
-- `end_datetime`
-- `department`
-- `comments`
-
 ## Outputs
 
 ### Monthly Summary
@@ -132,42 +107,3 @@ Single workbook with sheets:
 - `monthly_summary`
 - `daily_exceptions`
 - `processing_log`
-
-## Suggested Cloud Architecture
-
-### API
-
-- `POST /validate`
-- `POST /reconcile`
-- `POST /export`
-- `GET /health`
-
-### Components
-
-- Backend: FastAPI or Django API
-- Frontend: Next.js/React + Tailwind + shadcn/ui
-- Storage: object storage + relational DB for audit/session/config
-
-## Proposed Project Layout
-
-```text
-app.py
-config/
-  app_settings.json
-  reason_mappings.json
-modules/
-  calculator.py
-  classifier.py
-  cleaner.py
-  config.py
-  exporter.py
-  loader.py
-  matcher.py
-  schemas.py
-  validator.py
-tests/
-sample_data/
-frontend/
-README.md
-AGENTS.md
-```

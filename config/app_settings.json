@@ -1,0 +1,7 @@
+{
+  "required_daily_hours": 9,
+  "approved_status_values": ["approved"],
+  "lateness_justifier_reasons": ["medical excuse", "official permission"],
+  "work_mission_reasons": ["work mission", "official assignment"],
+  "leave_reasons": ["annual leave", "sick leave", "unpaid leave"]
+}
